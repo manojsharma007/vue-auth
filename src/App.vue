@@ -1,7 +1,15 @@
 <template>
     <div id="app">   
+          <nav>
+             
+<router-link v-bind:to="'/home'">Home</router-link> |
+<router-link v-bind:to="'/login'">Login</router-link> |
+ <a v-on:click="logout">Logout</a> | 
+<router-link v-bind:to="'/secure'">Secure</router-link>
 
-          
+
+            
+            </nav>
           <router-view></router-view>
     </div>
 </template>
@@ -12,9 +20,22 @@
     export default {
         name: 'App',
          components: {
-          
-          
-        },     
+                   
+        }, 
+       
+        data(){
+            return{
+               clientId:  process.env.VUE_APP_AUTHCONFIGDOMAIN
+              
+               
+            }
+        },
+        methods:{
+            logout: function () {
+            localStorage.removeItem('Token');
+            window.location.href = '/#/login ';
+    }
+        }   
     }
 </script>
 

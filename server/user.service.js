@@ -1,34 +1,56 @@
-const config = require('config.json');
-const jwt = require('jsonwebtoken');
-
-// users hardcoded for simplicity, store in a db for production applications
-const users = [
-    { id: 1, username: 'admin', password: 'admin', firstName: 'John', lastName: 'Sha' },
-    { id: 1, username: 'sysuser', password: 'sysuser', firstName: 'Poll', lastName: 'Rock' },
-    { id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }
-    
+const empolyees = [
+    {
+        "id": 1,
+        "first_name": "Sebastian",
+        "last_name": "Eschweiler",
+        "email": "sebastian@codingthesmartway.com"
+      },
+      {
+        "id": 2,
+        "first_name": "Steve",
+        "last_name": "Palmer",
+        "email": "steve@codingthesmartway.com"
+      },
+      {
+        "id": 3,
+        "first_name": "Ann",
+        "last_name": "Smith",
+        "email": "ann@codingthesmartway.com"
+      },
+      {
+        "id": 4,
+        "first_name": "john",
+        "last_name": "johnlasth",
+        "email": "john@codingthesmartway.com",
+        
+      }
     ];
 
 module.exports = {
-    authenticate,
-    getAll
+    getallemplyees,
+    getempolyeesbyId
 };
 
-async function authenticate({ username, password }) {
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) {
-        const token = jwt.sign({ sub: user.id }, config.secret);
-        const { password, ...userWithoutPassword } = user;
-        return {
-            ...userWithoutPassword,
-            token
-        };
-    }
-}
 
-async function getAll() {
-    return users.map(u => {
-        const { password, ...userWithoutPassword } = u;
-        return userWithoutPassword;
-    });
-}
+async function getallemplyees(req,res) {
+     
+     return empolyees;         
+
+    };
+async function getempolyeesbyId(req,res) {
+  //console.log("dfdf"+req);
+    const emp = empolyees.find(u => u.id == req);
+    console.log(emp)
+    
+      if (emp) {
+        return emp; 
+      
+      }
+      else
+      {
+          return empolyees;
+      }
+          
+             
+ 
+     };

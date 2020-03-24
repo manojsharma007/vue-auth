@@ -1,10 +1,9 @@
 var express =require('express');
 const app=express();
 var jwt = require('jsonwebtoken');
-const config = require('config.json');
 const bodyParser = require('body-parser');
 
-
+const userService = require('./user.service');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,7 +25,6 @@ const users = [
     { id: 3, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }
     
     ];
-
 
 
 
@@ -109,3 +107,18 @@ app.get('/api/destroytoken' ,function(req,res){
 app.listen(3000,function(){
  console.log('App listening on port 3000 !');
 });
+
+app.get('/api/getallempolyees',function(req,res){
+    userService.getallemplyees()
+        .then(mpolyees => res.json(mpolyees))
+        .catch(err => next(err));
+  
+})
+app.get('/api/getempolyeesbyId/:id',function(req,res){
+    
+   // console.log(req.params.id);
+    userService.getempolyeesbyId(req.params.id)
+        .then(emp => res.json(emp))
+        .catch(err => next(err));
+  
+})
