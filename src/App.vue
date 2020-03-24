@@ -30,6 +30,8 @@
                
             }
         },
+       
+         
         methods:{
             logout: function () {
             localStorage.removeItem('Token');

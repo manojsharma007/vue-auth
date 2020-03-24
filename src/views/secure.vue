@@ -7,6 +7,7 @@
   
      <div class="jumbotron">
      <select  v-model="selected" id="deptList"  @change="onChange(selected)" >
+       <option value=0>Select All</option>
         <option v-for="item in empolyeesNameDropdown"  :key="item.id" 
             :value="item.id">
             
@@ -42,7 +43,7 @@
             return {
                 token:"",
                 name:"",
-                empolyees:"",
+                empolyees:[],
                 selected:"",
                 empolyeesNameDropdown:''
             };
@@ -62,9 +63,9 @@
             })
 
                     axios.get(process.env.VUE_APP_SERVERURL + '/getallempolyees')
-                    .then((data) => {  
+                    .then((data) => { 
                         this.empolyees=data.data;
-                       this.empolyeesNameDropdown=data.data;                  
+                      this.empolyeesNameDropdown=data.data;                  
                     
                  });  
 
@@ -78,24 +79,13 @@
         },
         methods:{
             onChange(id) {
-
-             axios.get(process.env.VUE_APP_SERVERURL + '/getempolyeesbyId/'+id)
-                    .then((response) => {  
-                       this.empolyees=response
-                         });  
-
+                axios.get(process.env.VUE_APP_SERVERURL + '/getempolyeesbyId/'+id)
+                    .then((response) => {                    
+                      this.empolyees=[];
+                      this.empolyees=response.data; 
+                       });
                 
-              //this.empolyeesNameDropdown= this.empolyeesNameDropdown;
-             // this.empolyeesNameDropdown =this.empolyees;
-        //       console.log(this.empolyees)
-        //    let filteremp= this.empolyees.filter(function (e) {
-        //         return e.id == id;
-        //     });
-        //   this.empolyees=filteremp
-       
-         
-
-}
+              }
         }
 
     }

@@ -33,24 +33,46 @@ module.exports = {
 
 
 async function getallemplyees(req,res) {
-     
-     return empolyees;         
+  let result=[];
+  for (let i = 0; i < empolyees.length; i++) {
+    result.push({
+       "id":empolyees[i].id,
+        "first_name":empolyees[i].first_name,
+        "last_name":empolyees[i].last_name,
+        "email":empolyees[i].email
+      })
+  } 
+     return result;         
 
     };
-async function getempolyeesbyId(req,res) {
-  //console.log("dfdf"+req);
-    const emp = empolyees.find(u => u.id == req);
-    console.log(emp)
-    
-      if (emp) {
-        return emp; 
-      
+async function getempolyeesbyId(req,res) { 
+    let result=[];
+      if(req!=0) {
+        const emp = empolyees.find(u => u.id == req);     
+         
+          result.push({            
+             "id":emp.id,
+              "first_name":emp.first_name,
+              "last_name":emp.last_name,
+              "email":emp.email
+            })
+       
+        return result;    
       }
       else
       {
-          return empolyees;
+        for (let i = 0; i < empolyees.length; i++) {
+          result.push({
+             "id":empolyees[i].id,
+              "first_name":empolyees[i].first_name,
+              "last_name":empolyees[i].last_name,
+              "email":empolyees[i].email
+            })
+        } 
+       
+       return  result;  
       }
-          
+    
              
  
      };
